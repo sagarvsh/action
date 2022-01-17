@@ -6,9 +6,20 @@ on:
   #   - cron: "0 9 5 1 *"
   #   - cron: "0/5 * * * *"
   #   - cron: "0/6 * * * *"
-  repository_dispatch:
-    types: [build]
-  # push:
+  # repository_dispatch:
+  #   types: [build]
+  push:
+    branches:
+      - main
+      - 'feature/*'
+      - 'feature/**'
+      - '!feature/inorebranch'
+    tags:
+      - "v1.*"
+    paths:
+      '**.js'
+    # paths-ignore:
+    #   - 'docs/**'
   pull_request:
     types: [closed, assigned, opened, reopened]
 
