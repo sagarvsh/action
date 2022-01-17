@@ -1,0 +1,30 @@
+name: Push file to a repo
+on: push
+env:
+  WF_ENV: ${{ secrets.WF_ENV }}
+
+jobs:
+  create_issue:
+    runs-on: ubuntu-latest 
+    # permissions:
+    #   issues: write 
+    steps:
+      - name: Push a randon file 
+        run: |
+          pwd
+          ls -latr 
+          git init
+          # git remote add origin "git@github.com:sagarvsh/action.git"
+          git remote add origin "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/sagarvsh/action.git"
+          git config --global user.email "my-bot@bot.com"
+          git config --global user.name "my-bot"
+          git fetch
+          git checkout main
+          git branch --set-upstream-to=origin/main
+          git pull
+          ls -latr
+          echo $RANDOM >> random.txt
+          ls -a 
+          git add -A 
+          git commit -m "Random file"
+          git push
